@@ -55,4 +55,4 @@ MIT © [Yann SALAKO](https://github.com/Yann2808/medi-class-ai-back)
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue)](https://www.linkedin.com/yann-salako)
 
-[![MediClassAI System](https://img.shields.io/badge/ARCHITECTURE-Frontend_+_Backend-8A2BE2)](https://github.com/votre-user/medi-class-ai-front#readme)
+[![MediClassAI System](https://img.shields.io/badge/ARCHITECTURE-Frontend_+_Backend-8A2BE2)](https://github.com/Yann2808/medi-class-ai-front#readme)
