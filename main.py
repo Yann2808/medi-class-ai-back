@@ -42,6 +42,16 @@ async def classify_text(request: TextRequest):
         "entities": [(ent.text, ent.label_) for ent in doc.ents]
     }
 
+@app.get("/health")
+def health_check():
+    return {"status": "ok"}
+
+@app.middleware("http")
+async def log_requests(request, call_next):
+    response = await call_next(request)
+    print(f"{request.method} {request.url.path} - {response.status_code}")
+    return response
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # À restreindre en prod
