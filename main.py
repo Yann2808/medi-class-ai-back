@@ -40,3 +40,9 @@ async def classify_text(request: TextRequest):
         "detected_fields": detected_fields if detected_fields else ["general"],
         "entities": [(ent.text, ent.label_) for ent in doc.ents]
     }
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # À restreindre en prod
+    allow_methods=["POST"]
+)
