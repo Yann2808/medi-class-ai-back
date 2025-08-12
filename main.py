@@ -15,6 +15,10 @@ except OSError:
 class TextRequest(BaseModel):
     text: str
 
+@app.get("/")
+def home():
+    return {"message": "API MediClassAI - Utilisez /classify pour analyser du texte"}
+
 @app.post("/classify")
 async def classify_text(request: TextRequest):
     doc = nlp(request.text)
