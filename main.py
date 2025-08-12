@@ -3,9 +3,14 @@ from pydantic import BaseModel
 import spacy
 
 # Charger un modèle spaCy pré-entraîné (petit modèle pour rapidité)
-nlp = spacy.load("en_core_web_sm")
-
 app = FastAPI()
+
+try:
+    nlp = spacy.load("en_core_web_sm")
+except OSError:
+    import subprocess
+    subprocess.run(["python", "-m", "spacy", "download", "en_core_web_sm"])
+    nlp = spacy.load("en_core_web_sm")
 
 class TextRequest(BaseModel):
     text: str
