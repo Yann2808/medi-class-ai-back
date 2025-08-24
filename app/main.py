@@ -1,59 +1,11 @@
-from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
-from pydantic import BaseModel
-import spacy
+from app.api.endpoints import router
 
-# Charger un modèle spaCy pré-entraîné (petit modèle pour rapidité)
-app = FastAPI()
+app = FastAPI(title="MediClassAI API", version="1.0.0")
 
-try:
-    nlp = spacy.load("en_core_web_sm")
-except OSError:
-    import subprocess
-    subprocess.run(["python", "-m", "spacy", "download", "en_core_web_sm"])
-    nlp = spacy.load("en_core_web_sm")
-
-class TextRequest(BaseModel):
-    text: str
+# Inclusion des routes
+app.include_router(router, prefix="/api/v1")
 
 @app.get("/")
-def home():
-    return {"message": "API MediClassAI - Utilisez /classify pour analyser du texte"}
-
-@app.post("/classify")
-async def classify_text(request: TextRequest):
-    doc = nlp(request.text)
-    
-    # Logique simple de détection basée sur les mots clés
-    medical_fields = {
-        "cardiology": ["heart", "cardiac", "blood pressure"],
-        "neurology": ["brain", "nerve", "neurological"],
-        "orthopedics": ["bone", "fracture", "joint"]
-    }
-    
-    detected_fields = []
-    for field, keywords in medical_fields.items():
-        if any(keyword in request.text.lower() for keyword in keywords):
-            detected_fields.append(field)
-    
-    return {
-        "text": request.text,
-        "detected_fields": detected_fields if detected_fields else ["general"],
-        "entities": [(ent.text, ent.label_) for ent in doc.ents]
-    }
-
-@app.get("/health")
-def health_check():
-    return {"status": "ok"}
-
-@app.middleware("http")
-async def log_requests(request, call_next):
-    response = await call_next(request)
-    print(f"{request.method} {request.url.path} - {response.status_code}")
-    return response
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # À restreindre en prod
-    allow_methods=["POST"]
-)
+async def root():
+    return {"message": "MediClassAI API - Utilisez /api/v1/classify"}
