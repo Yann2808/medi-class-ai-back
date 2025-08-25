@@ -4,7 +4,12 @@ import spacy
 
 class NLPModel:
     def __init__(self):
-        self.nlp = spacy.load("en_core_web_sm")
+        try:
+            self.nlp = spacy.load("en_core_web_sm")
+        except:
+            # Fallback sans modèle chargé
+            self.nlp = spacy.blank("en")
+            print("⚠️  Using blank spaCy model (no NLP features)")
 
     def analyze(self, text: str):
         doc = self.nlp(text)
