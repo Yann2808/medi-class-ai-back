@@ -1,5 +1,6 @@
 # REMPLACEZ par ceci :
 fastapi==0.104.1
 uvicorn==0.24.0
-spacy==3.5.0
+spacy==3.7.2
+blis==0.7.11
 python-multipart==0.0.6
