@@ -1,5 +1,5 @@
-# REMPLACEZ par ceci :
+# Version SPECIFIQUE pour éviter les problèmes
+spacy==3.7.0
 fastapi==0.104.1
 uvicorn==0.24.0
-spacy==3.5.0
 python-multipart==0.0.6

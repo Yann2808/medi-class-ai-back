@@ -4,9 +4,18 @@ FROM python:3.9-slim
 # Répertoire de travail
 WORKDIR /app
 
+# Installation des dépendances système REQUISES pour spaCy
+RUN apt-get update && apt-get install -y \
+    gcc \
+    g++ \
+    make \
+    && rm -rf /var/lib/apt/lists/*
+
 # Copie des dépendances et installation
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir \ 
+    --only-binary=:all: \
+    -r requirements.txt
 
 # Téléchargement du modèle spaCy
 RUN python -m spacy download en_core_web_sm
